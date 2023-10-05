@@ -9,11 +9,11 @@ HACKPREP is a plug-and-play tool that increases testing efficiency by automating
 ## Main Features
 - Tests internet connectivity and DNS name resolution immediately after execution
 - Downloads, installs, activates, and configures the latest versions of Nessus and Cobalt Strike after securely prompting for license keys
-- Initializes the Cobalt Strike team server to run in the background as a service using a complex password and random TCP port number to listen on. Enabled to start automatically on boot in case of a restart
+- Initializes the Cobalt Strike team server to run in the background as an enabled service using a complex password and random port to listen on
 - Automatically builds the Mimikatz, Resource, and Process_Inject Cobalt Strike kits (CNA output files must be imported manually). Artifact/Sleep Mask/etc. aren't built due to the manual customization they require
 - Adds a rule within Nessus to reject the attack machine's IPv4 address by default. Prompts for an optional file containing additional hosts to reject within Nessus
 - Automatically creates an admin user within Nessus using a randomly-generated complex password
-- Modifies Nessus's SQLite database to only listen on localhost (127.0.0.1) instead of 0.0.0.0.
+- Modifies Nessus's SQLite database to only listen on localhost (127.0.0.1) instead of 0.0.0.0
 - Automatically disables "Use Vulnerability Groups" and "Use Mixed Vulnerability Groups" within Nessus
 - Installs several hacking tools (Impacket, CrackMapExec, Certipy, Coercer, LdapRelayScan, etc.) using isolated virtual environments to prevent dependency conflicts 
 - Patches the infamous Libcrypto version Python error by fixing the erroneous regular expressions
