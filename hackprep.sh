@@ -288,7 +288,7 @@ configure_nessus() {
 	if grep -q "reject $INTERNAL_IP" $NESSUS_RULES_FILE \
 	|| echo "reject $INTERNAL_IP" >> $NESSUS_RULES_FILE
 	then
-		echo -e "$PLUS_SIGN Rejected the attack machine (\033[93m$INTERNAL_IP\033[0m) within \033[93mnessusd.rules\033[0m."
+		echo -e "$PLUS_SIGN Rejected the attack machine (\033[93m$INTERNAL_IP\033[0m) within \033[94mNessus\033[0m."
 	else
 		clean_exit "Unable to append to \033[93mnessusd.rules\033[0m. Troubleshoot   \033[94mNessus\033[0m installation."
 	fi
@@ -420,7 +420,7 @@ configure_cobalt_strike() {
 		clean_exit "Couldn't create team server service file."
 	fi
 
-	echo -e "$STAR_SIGN Initializing team server service via systemctl..."
+	echo -e "$STAR_SIGN Initializing team server service..."
 
 	if systemctl daemon-reload &>/dev/null \
 	&& systemctl reset-failed &>/dev/null \
@@ -429,7 +429,7 @@ configure_cobalt_strike() {
 	then
 		sleep 4
 		cd $TOOLS_DIRECTORY/cobaltstrike
-		if ! ./c2lint $MALLEABLE_C2_PROFILE &>/dev/null
+		if ./c2lint $MALLEABLE_C2_PROFILE &>/dev/null | grep -q "Unable to load"
 		then
 			echo -e "$NEGATIVE_SIGN Error with \033[96m$MALLEABLE_C2_PROFILE\033[0m."
 			clean_exit "Obtain info via c2lint, then rerun \033[1m\033[3m\033[93mHACKPREP\033[0m."
@@ -450,16 +450,20 @@ configure_cobalt_strike() {
 		clean_exit "Unable to configure team server service."
 	fi
 
-	for KIT in mimikatz resource process_inject
-	do
-		if cd $TOOLS_DIRECTORY/cobaltstrike/arsenal-kit/kits/$KIT \
-		&& ./build.sh "$TOOLS_DIRECTORY/cobaltstrike/$KIT" &>/dev/null
-		then
-			echo -e "$PLUS_SIGN Built \033[95m$KIT\033[0m kit: \033[93m$TOOLS_DIRECTORY/cobaltstrike/$KIT\033[0m."
-		else
-			echo -e "$NEGATIVE_SIGN Unable to build \033[95m$KIT\033[0m kit. Continuing..."
-		fi
-	done
+	if mkdir $TOOLS_DIRECTORY/cobaltstrike/built_kits \
+	&& echo -e "$STAR_SIGN Building kits within \033[93m$TOOLS_DIRECTORY/cobaltstrike/built_kits[0m..."
+	then
+		for KIT in mimikatz resource process_inject
+		do
+			if cd $TOOLS_DIRECTORY/cobaltstrike/arsenal-kit/kits/$KIT \
+			&& ./build.sh "$TOOLS_DIRECTORY/cobaltstrike/built_kits/$KIT" &>/dev/null
+			then
+				echo -e "$PLUS_SIGN Built \033[95m$KIT\033[0m kit."
+			else
+				echo -e "$NEGATIVE_SIGN Unable to build \033[95m$KIT\033[0m kit. Continuing..."
+			fi
+		done
+  	fi
 }
 
 update_tools() {
@@ -478,13 +482,15 @@ update_tools() {
 }
 
 install_collection() {
-	echo -e "$STAR_SIGN Initiating automatic tool installation process. This may take a while..."
+	echo -e "$STAR_SIGN Initiating tool installation process. This may take a while..."
 
 	# Git
 	if ! apt install git -y &>/dev/null
 	then
 		echo "$NEGATIVE_SIGN Couldn't install \033[96mGit\033[0m. Exiting automatic tool installation process..."
 		return 1
+	else
+		echo -e "$INSTALL_SIGN Installed \033[96mGit\033[0m via APT."
 	fi
 
 	# pipx
@@ -492,6 +498,8 @@ install_collection() {
 	then
 		echo "$NEGATIVE_SIGN Couldn't install \033[96mpipx\033[0m. Exiting automatic tool installation process..."
 		return 1
+	else
+		echo -e "$INSTALL_SIGN Installed \033[96mpipx\033[0m via pip."
 	fi
 
 	# Impacket
