@@ -816,7 +816,7 @@ zshrc_functions() {
 
 	! grep -q -i "zippy()" "$HOME/.zshrc" \
 	&& cat <<< 'zippy() {
-	DATE=`date "+%F"`
+	DATE=`date "+%F_%I:%M-%p"`
 
 	success() {
 		echo -e "\033[1m\033[92m[+]\033[0m Compressed evidence to \033[93mevidence_$DATE.zip\033[0m."
