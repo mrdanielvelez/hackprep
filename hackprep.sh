@@ -523,13 +523,12 @@ install_collection() {
 	&& echo -e "$INSTALL_SIGN Installed \033[96mldapdomaindump\033[0m via pipx."
 
 	# BloodHound Python Ingestor
-	python3 -m pip install bloodhound --upgrade &>/dev/null \
-	&& echo -e "$INSTALL_SIGN Installed \033[96mBloodHound Python Ingestor\033[0m via pip."
+	python3 -m pipx install bloodhound &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mBloodHound Python Ingestor (bloodhound-python)\033[0m via pipx."
 
 	# mitm6
-	python3 -m pip install mitm6 --upgrade &>/dev/null \
-	&& python3 -m pip install service_identity --upgrade &>/dev/null \
-	&& echo -e "$INSTALL_SIGN Installed \033[96mmitm6\033[0m via pip."
+	python3 -m pipx install mitm6 &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mmitm6\033[0m via pipx."
 
 	# feroxbuster
 	apt install feroxbuster -y &>/dev/null \
