@@ -451,14 +451,14 @@ configure_cobalt_strike() {
 	fi
 
 	if mkdir $TOOLS_DIRECTORY/cobaltstrike/built_kits \
-	&& echo -e "$STAR_SIGN Building kits within \033[93m$TOOLS_DIRECTORY/cobaltstrike/built_kits[0m..."
+	&& echo -e "$PLUS_SIGN Created \033[93m$TOOLS_DIRECTORY/cobaltstrike/built_kits\033[0m. Building kits..."
 	then
 		for KIT in mimikatz resource process_inject
 		do
 			if cd $TOOLS_DIRECTORY/cobaltstrike/arsenal-kit/kits/$KIT \
 			&& ./build.sh "$TOOLS_DIRECTORY/cobaltstrike/built_kits/$KIT" &>/dev/null
 			then
-				echo -e "$PLUS_SIGN Built \033[95m$KIT\033[0m kit."
+				echo -e "$PLUS_SIGN Successfully built \033[95m$KIT\033[0m kit."
 			else
 				echo -e "$NEGATIVE_SIGN Unable to build \033[95m$KIT\033[0m kit. Continuing..."
 			fi
@@ -482,7 +482,7 @@ update_tools() {
 }
 
 install_collection() {
-	echo -e "$STAR_SIGN Initiating tool installation process. This may take a while..."
+	echo -e "$STAR_SIGN Commencing installation routine. This may take a while..."
 
 	# Git
 	if ! apt install git -y &>/dev/null
@@ -662,7 +662,7 @@ install_requirements() {
 configure_responder() {
 	if [[ -f $TOOLS_DIRECTORY/Responder/Responder.conf ]]
 	then
-		echo -e "$STAR_SIGN Modifying \033[91mResponder's\033[0m configuration file..."
+		echo -e "$STAR_SIGN Modifying \033[91mResponder's\033[0m configuration file..." && sleep 1
 	else
 		echo -e "$NEGATIVE_SIGN \033[93m$TOOLS_DIRECTORY/Responder/Responder.conf\033[0m does not exist..."
 		return 1
@@ -843,18 +843,19 @@ zshrc_functions() {
 }
 
 conclusion() {
-	echo -e "$STAR_SIGN Run \033[95msource $HOME/.zshrc\033[0m to use new \033[93maliases\033[0m/\033[93mfunctions\033[0m."
+	echo -e "$STAR_SIGN Run \033[96msource $HOME/.zshrc\033[0m to use new \033[93maliases\033[0m/\033[93mfunctions\033[0m."
 
 	if [[ $OUTPUT_NESSUS == true ]] || [[ $OUTPUT_COBALT_STRIKE == true ]]
-		then echo
+	then
+ 		echo && sleep 1
 	fi
 	if [[ $OUTPUT_NESSUS == true ]]
 	then
-		echo -e "\033[1m\033[96m[+]\033[0m \033[1m\033[3mNessus Credentials\033[0m \033[1m\033[96m—\033[0m \033[1m/opt/nessus/creds_hackprep_$DATE.txt\033[0m"
+		echo -e "\033[1m\033[93m[*]\033[0m \033[1m\033[3mNessus Credentials\033[0m \033[1m\033[93m—\033[0m \033[1m/opt/nessus/creds_hackprep_$DATE.txt\033[0m"
 	fi
 	if [[ $OUTPUT_COBALT_STRIKE == true ]]
 	then
-		echo -e "\033[1m\033[96m[+]\033[0m \033[1m\033[3mTeam Server Info\033[0m \033[1m\033[96m—\033[0m \033[1m$TOOLS_DIRECTORY/cobaltstrike/server_info_hackprep_$DATE.txt\033[0m"
+		echo -e "\033[1m\033[93m[*]\033[0m \033[1m\033[3mTeam Server Info\033[0m \033[1m\033[93m—\033[0m \033[1m$TOOLS_DIRECTORY/cobaltstrike/server_info_hackprep_$DATE.txt\033[0m"
 	fi
 	echo -e "\n\033[1m\033[3m\033[93mHACKPREP\033[0m finished execution at \033[91m`date '+%I:%M %p'`\033[0m on \033[93m`date '+%B %d, %Y'`\033[0m.\n"
 	exit 0
