@@ -1,10 +1,10 @@
-# HACKPREP - Autoconfigure an Attack Machine
-![HACKPREP Banner](https://github.com/mrdanielvelez/hackprep/assets/85040841/864d408b-a094-4138-b88e-e8182dd155d2)
+# HACKPREP — Autoconfigure an Attack Machine
+![HACKPREP Banner](https://github.com/mrdanielvelez/hackprep/assets/85040841/ab0b739c-28b6-40c3-9c55-3105af007b03)
 
-HACKPREP is a plug-and-play tool that increases testing efficiency by automating a myriad of repetitive actions pertaining to configuring an attack machine from scratch.
+HACKPREP automates a myriad of repetitive actions pertaining to configuring an attack machine from scratch.
 
 ## Demo GIF
-![hackprep_demo](https://github.com/mrdanielvelez/hackprep/assets/85040841/a3cec14b-0eea-467f-9247-0b42f36b7d76)
+![hackprep_demo](https://github.com/mrdanielvelez/hackprep/assets/85040841/80267c6d-32a8-4c85-9b74-1168b0a7fb70)
 
 ## Main Features
 - Tests internet connectivity and DNS name resolution immediately after execution
@@ -28,5 +28,5 @@ HACKPREP is a plug-and-play tool that increases testing efficiency by automating
 - rsmbhttp — Toggle switch for Responder's SMB and HTTP servers (rsmbhttp [on/off/http/smb], without arguments it simply prints the current status)
 - zippy — Automatically outputs a ZIP file containing all of your project evidence (including Tmux command logs). If no path is specified it assumes that “$PWD” = project directory
 
-## Helper Functions Demo
-![helper_functions](https://github.com/mrdanielvelez/hackprep/assets/85040841/038d8140-9831-43d4-a717-15eee73bd2ff)
+## Helper Functions Demo (*rsmbhttp* and *zippy*)
+![helper_functions](https://github.com/mrdanielvelez/hackprep/assets/85040841/d282f4d4-94e3-43ed-9599-ddd49595b1b2)
