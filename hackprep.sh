@@ -527,8 +527,13 @@ install_collection() {
 	&& echo -e "$INSTALL_SIGN Installed \033[96mBloodHound Python Ingestor (bloodhound-python)\033[0m via pipx."
 
 	# mitm6
-	python3 -m pipx install mitm6 &>/dev/null \
+	rm -rf $TOOLS_DIRECTORY/mitm6 \
+	&& python3 -m pipx install mitm6 &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mmitm6\033[0m via pipx."
+
+ 	# ntdsutil
+	python3 -m pipx install git+https://github.com/mrdanielvelez/ntdsutil &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mntdsutil\033[0m via pipx."
 
 	# feroxbuster
 	apt install feroxbuster -y &>/dev/null \
@@ -560,6 +565,10 @@ install_collection() {
 	go install github.com/sensepost/gowitness@latest &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mGoWitness\033[0m via Go."
 
+	# Gosecretsdump (Offline secretsdump.py converted to Golang to increase speed) 
+	go install github.com/C-Sto/gosecretsdump@latest &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mGosecretsdump\033[0m via Go."
+
 	# Kerbrute — credit to Parker Hunter for providing the "errors.go" patch shown below
 	if ! [[ -d $TOOLS_DIRECTORY/kerbrute ]]
 	then
@@ -576,6 +585,13 @@ install_collection() {
 	then
 		git clone https://github.com/topotam/PetitPotam $TOOLS_DIRECTORY/PetitPotam &>/dev/null \
 		&& echo -e "$INSTALL_SIGN Installed \033[96mPetitPotam\033[0m via Git."
+	fi
+
+ 	# LSA-Reaper
+	if ! [[ -d $TOOLS_DIRECTORY/LSA-Reaper ]]
+	then
+		git clone https://github.com/samiam1086/LSA-Reaper $TOOLS_DIRECTORY/LSA-Reaper &>/dev/null \
+		&& echo -e "$INSTALL_SIGN Installed \033[96mLSA-Reaper\033[0m via Git."
 	fi
 
 	# nullinux
