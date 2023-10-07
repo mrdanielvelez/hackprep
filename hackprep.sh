@@ -524,7 +524,7 @@ install_collection() {
 
 	# BloodHound Python Ingestor
 	python3 -m pipx install bloodhound &>/dev/null \
-	&& echo -e "$INSTALL_SIGN Installed \033[96mBloodHound Python Ingestor (bloodhound-python)\033[0m via pipx."
+	&& echo -e "$INSTALL_SIGN Installed \033[96mbloodhound-python\033[0m via pipx."
 
 	# mitm6
 	rm -rf $TOOLS_DIRECTORY/mitm6 \
