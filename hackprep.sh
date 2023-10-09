@@ -531,10 +531,6 @@ install_collection() {
 	&& python3 -m pipx install mitm6 &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mmitm6\033[0m via pipx."
 
- 	# ntdsutil
-	python3 -m pipx install git+https://github.com/mrdanielvelez/ntdsutil &>/dev/null \
-	&& echo -e "$INSTALL_SIGN Installed \033[96mntdsutil\033[0m via pipx."
-
 	# feroxbuster
 	apt install feroxbuster -y &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mferoxbuster\033[0m via APT."
