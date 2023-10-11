@@ -508,7 +508,7 @@ install_collection() {
 
 	# CrackMapExec
 	rm -rf $TOOLS_DIRECTORY/CrackMapExec $TOOLS_DIRECTORY/crackmapexec \
-	&& git clone https://github.com/byt3bl33d3r/CrackMapExec $TOOLS_DIRECTORY/CrackMapExec \
+	&& git clone https://github.com/byt3bl33d3r/CrackMapExec $TOOLS_DIRECTORY/CrackMapExec &>/dev/null \
 	&& cd $TOOLS_DIRECTORY/CrackMapExec && python3 -m pipx install . &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mCrackMapExec (CME)\033[0m via pipx."
 
