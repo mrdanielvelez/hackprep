@@ -507,7 +507,9 @@ install_collection() {
 	&& echo -e "$INSTALL_SIGN Installed \033[96mImpacket\033[0m via pipx."
 
 	# CrackMapExec
-	python3 -m pipx install crackmapexec &>/dev/null \
+	rm -rf $TOOLS_DIRECTORY/CrackMapExec $TOOLS_DIRECTORY/crackmapexec \
+	&& git clone https://github.com/byt3bl33d3r/CrackMapExec $TOOLS_DIRECTORY/CrackMapExec \
+	&& cd $TOOLS_DIRECTORY/CrackMapExec && python3 -m pipx install . &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mCrackMapExec (CME)\033[0m via pipx."
 
 	# Coercer
