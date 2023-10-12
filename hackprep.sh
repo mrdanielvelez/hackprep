@@ -533,6 +533,10 @@ install_collection() {
 	&& python3 -m pipx install mitm6 &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mmitm6\033[0m via pipx."
 
+ 	# pyntdsutil
+	python3 -m pipx install git+https://github.com/mrdanielvelez/pyntdsutil &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mpyntdsutil\033[0m via pipx."
+
 	# feroxbuster
 	apt install feroxbuster -y &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mferoxbuster\033[0m via APT."
@@ -566,6 +570,10 @@ install_collection() {
 	# Gosecretsdump (Offline secretsdump.py converted to Golang to increase speed) 
 	go install github.com/C-Sto/gosecretsdump@latest &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mGosecretsdump\033[0m via Go."
+
+	# Nuclei
+	go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mNuclei\033[0m via Go."
 
 	# Kerbrute — credit to Parker Hunter for providing the "errors.go" patch shown below
 	if ! [[ -d $TOOLS_DIRECTORY/kerbrute ]]
