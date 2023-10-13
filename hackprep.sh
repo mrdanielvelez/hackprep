@@ -358,6 +358,15 @@ install_cobalt_strike() {
 	then
 		clean_exit "Unable to extract \033[91mCobalt Strike\033[0m download token."
 	fi
+
+	if ! java -version &>/dev/null
+	then
+  		apt install openjdk-11-jdk -y &>/dev/null \
+    		&& echo -e "$PLUS_SIGN Installed JDK for \033[91mCobalt Strike\033[0m..."
+	else
+       		clean_exit "Unable to install JDK for \033[91mCobalt Strike\033[0m."
+	fi
+ 	
 	curl -s -k -L "https://download.cobaltstrike.com/downloads/$MAIN_TOKEN/cobaltstrike-dist.tgz" -o /tmp/cobaltstrike-dist.tgz
 	tar -xf /tmp/cobaltstrike-dist.tgz -C $TOOLS_DIRECTORY/ && rm /tmp/cobaltstrike-dist.tgz
 	cd $TOOLS_DIRECTORY/cobaltstrike && ./update <<< $COBALT_STRIKE_LICENSE | grep "Unpacking" -q && echo -e "$PLUS_SIGN Successfully downloaded \033[91mCobalt Strike\033[0m. Unpacking data..."
@@ -484,6 +493,17 @@ update_tools() {
 install_collection() {
 	echo -e "$STAR_SIGN Commencing installation routine. This may take a while..."
 
+	GO_PATH="`go env GOPATH`/bin"
+
+	# Python3 dependencies
+ 	if ! apt install python3 python3-venv -y &>/dev/null
+	then
+		echo "$NEGATIVE_SIGN Couldn't install \033[96mPython3 dependencies\033[0m. Exiting automatic tool installation process..."
+		return 1
+	else
+		echo -e "$INSTALL_SIGN Installed \033[96mPython3 dependencies\033[0m via APT."
+	fi
+
 	# Git
 	if ! apt install git -y &>/dev/null
 	then
@@ -508,8 +528,7 @@ install_collection() {
 
 	# CrackMapExec
 	rm -rf $TOOLS_DIRECTORY/CrackMapExec $TOOLS_DIRECTORY/crackmapexec \
-	&& git clone https://github.com/byt3bl33d3r/CrackMapExec $TOOLS_DIRECTORY/CrackMapExec &>/dev/null \
-	&& cd $TOOLS_DIRECTORY/CrackMapExec && python3 -m pipx install . &>/dev/null \
+	&& python3 -m pipx install git+https://github.com/byt3bl33d3r/CrackMapExec &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mCrackMapExec (CME)\033[0m via pipx."
 
 	# Coercer
@@ -561,18 +580,22 @@ install_collection() {
 
 	# Chisel
 	go install github.com/jpillora/chisel@latest &>/dev/null \
+ 	&& cp "$GO_PATH/chisel" /usr/bin/chisel && chmod +x /usr/bin/chisel \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mChisel\033[0m via Go."
 
 	# GoWitness
 	go install github.com/sensepost/gowitness@latest &>/dev/null \
+ 	&& cp "$GO_PATH/gowitness" /usr/bin/gowitness && chmod +x /usr/bin/gowitness \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mGoWitness\033[0m via Go."
 
 	# Gosecretsdump (Offline secretsdump.py converted to Golang to increase speed) 
 	go install github.com/C-Sto/gosecretsdump@latest &>/dev/null \
+ 	&& cp "$GO_PATH/gosecretsdump" /usr/bin/gosecretsdump && chmod +x /usr/bin/gosecretsdump \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mGosecretsdump\033[0m via Go."
 
 	# Nuclei
 	go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest &>/dev/null \
+  	&& cp "$GO_PATH/bin/nuclei" /usr/bin/nuclei && chmod +x /usr/bin/nuclei \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mNuclei\033[0m via Go."
 
 	# Kerbrute — credit to Parker Hunter for providing the "errors.go" patch shown below
@@ -582,7 +605,7 @@ install_collection() {
 		&& sed -i '44 i \\tif strings.Contains(eString, "KDC_Error: AS Exchange Error") {' $TOOLS_DIRECTORY/kerbrute/session/errors.go \
 		&& sed -i '45 i \\t\treturn true, "Unknown Error"\n\t}' $TOOLS_DIRECTORY/kerbrute/session/errors.go \
 		&& cd $TOOLS_DIRECTORY/kerbrute && make clean &>/dev/null && make linux &>/dev/null \
-		&& cp dist/kerbrute_linux_amd64 /usr/bin/kerbrute && cp dist/kerbrute_linux_amd64 "$HOME/go/bin/kerbrute" \
+		&& cp dist/kerbrute_linux_amd64 /usr/bin/kerbrute && chmod +x /usr/bin/kerbrute && cp dist/kerbrute_linux_amd64 "$HOME/go/bin/kerbrute" \
 		&& echo -e "$INSTALL_SIGN Installed \033[96mKerbrute\033[0m from source (patched \033[93mAS Exchange Error\033[0m)."
 	fi
 
