@@ -361,10 +361,8 @@ install_cobalt_strike() {
 
 	if ! java -version &>/dev/null
 	then
-  		if apt install openjdk-11-jdk -y &>/dev/null
+  		if ! apt install openjdk-11-jdk -y &>/dev/null
     	then
-    		echo -e "$PLUS_SIGN Installed JDK for \033[91mCobalt Strike\033[0m..."
-		else
        		clean_exit "Unable to install JDK for \033[91mCobalt Strike\033[0m."
        	fi
 	fi
