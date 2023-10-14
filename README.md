@@ -15,7 +15,7 @@ HACKPREP automates a myriad of repetitive actions pertaining to configuring an a
 - Automatically creates an admin user within Nessus using a randomly-generated complex password
 - Modifies Nessus's SQLite database to only listen on localhost (127.0.0.1) instead of 0.0.0.0
 - Automatically disables "Use Vulnerability Groups" and "Use Mixed Vulnerability Groups" within Nessus
-- Installs several hacking tools (Impacket, CrackMapExec, Certipy, Coercer, LdapRelayScan, etc.) using isolated virtual environments to prevent dependency conflicts 
+- Installs several hacking tools (Impacket, CrackMapExec, Certipy, Coercer, LdapRelayScan, etc.) within isolated virtual environments to prevent dependency conflicts 
 - Patches the infamous Libcrypto version Python error by fixing the erroneous regular expressions
 - Patches the AttributeError that stems from using Certipy with >= Python3.11
 - Builds Kerbrute from source after patching "KDC_ERROR: AS Exchange Error" (credit to Parker for providing me with info on this)
