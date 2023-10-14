@@ -361,10 +361,12 @@ install_cobalt_strike() {
 
 	if ! java -version &>/dev/null
 	then
-  		apt install openjdk-11-jdk -y &>/dev/null \
-    		&& echo -e "$PLUS_SIGN Installed JDK for \033[91mCobalt Strike\033[0m..."
-	else
+  		if apt install openjdk-11-jdk -y &>/dev/null
+    	then
+    		echo -e "$PLUS_SIGN Installed JDK for \033[91mCobalt Strike\033[0m..."
+		else
        		clean_exit "Unable to install JDK for \033[91mCobalt Strike\033[0m."
+       	fi
 	fi
  	
 	curl -s -k -L "https://download.cobaltstrike.com/downloads/$MAIN_TOKEN/cobaltstrike-dist.tgz" -o /tmp/cobaltstrike-dist.tgz
