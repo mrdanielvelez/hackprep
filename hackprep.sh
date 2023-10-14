@@ -543,6 +543,11 @@ install_collection() {
 	python3 -m pipx install ldapdomaindump &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mldapdomaindump\033[0m via pipx."
 
+	# LdapRelayScan
+	rm -rf $TOOLS_DIRECTORY/LdapRelayScan $TOOLS_DIRECTORY/ldaprelayscan \
+	&& pipx install git+https://github.com/mrdanielvelez/LdapRelayScan &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mldaprelayscan\033[0m via pipx."
+
 	# BloodHound Python Ingestor
 	python3 -m pipx install bloodhound &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mbloodhound-python\033[0m via pipx."
@@ -555,10 +560,6 @@ install_collection() {
  	# pyntdsutil
 	python3 -m pipx install git+https://github.com/mrdanielvelez/pyntdsutil &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mpyntdsutil\033[0m via pipx."
-
-	# feroxbuster
-	apt install feroxbuster -y &>/dev/null \
-	&& echo -e "$INSTALL_SIGN Installed \033[96mferoxbuster\033[0m via APT."
 
 	# Nmap
 	apt install nmap -y &>/dev/null \
@@ -583,6 +584,11 @@ install_collection() {
  	&& cp "$GO_PATH/chisel" /usr/bin/chisel && chmod +x /usr/bin/chisel \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mChisel\033[0m via Go."
 
+	# Gobuster
+	go install github.com/OJ/gobuster/v3@latest &>/dev/null \
+ 	&& cp "$GO_PATH/gobuster" /usr/bin/gobuster && chmod +x /usr/bin/gobuster \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mGobuster\033[0m via Go."	
+
 	# GoWitness
 	go install github.com/sensepost/gowitness@latest &>/dev/null \
  	&& cp "$GO_PATH/gowitness" /usr/bin/gowitness && chmod +x /usr/bin/gowitness \
@@ -595,7 +601,7 @@ install_collection() {
 
 	# Nuclei
 	go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest &>/dev/null \
-  	&& cp "$GO_PATH/bin/nuclei" /usr/bin/nuclei && chmod +x /usr/bin/nuclei \
+  	&& cp "$GO_PATH/nuclei" /usr/bin/nuclei && chmod +x /usr/bin/nuclei \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mNuclei\033[0m via Go."
 
 	# Kerbrute — credit to Parker Hunter for providing the "errors.go" patch shown below
@@ -680,18 +686,6 @@ install_collection() {
 	fi
 	git clone https://github.com/lgandx/Responder $TOOLS_DIRECTORY/Responder &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mResponder\033[0m via Git."
-
-	# LdapRelayScan
-	if [[ -d $TOOLS_DIRECTORY/LdapRelayScan || -d $TOOLS_DIRECTORY/ldaprelayscan ]]
-	then
-		rm -rf $TOOLS_DIRECTORY/LdapRelayScan $TOOLS_DIRECTORY/ldaprelayscan
-	fi
-	docker info &>/dev/null || apt install docker.io -y &>/dev/null \
-	&& git clone https://github.com/zyn3rgy/LdapRelayScan $TOOLS_DIRECTORY/LdapRelayScan &>/dev/null \
-	&& docker build -f $TOOLS_DIRECTORY/LdapRelayScan/docker/Dockerfile -t ldaprelayscan $TOOLS_DIRECTORY/LdapRelayScan &>/dev/null \
-	&& rm -rf $TOOLS_DIRECTORY/LdapRelayScan \
-	&& grep -q 'alias ldaprelayscan' "$HOME/.zshrc" || echo "alias ldaprelayscan='docker run ldaprelayscan';" >> "$HOME/.zshrc" \
-	&& echo -e "$INSTALL_SIGN Installed \033[96mLdapRelayScan\033[0m via Docker. Alias: \033[93mldaprelayscan\033[0m."
 }
 
 install_requirements() {
