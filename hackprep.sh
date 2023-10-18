@@ -561,6 +561,10 @@ install_collection() {
 	python3 -m pipx install git+https://github.com/mrdanielvelez/pyntdsutil &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mpyntdsutil\033[0m via pipx."
 
+	# pre2k (Identify pre-Windows 2000 computer objects which can be leveraged to gain a foothold)
+	python3 -m pipx install git+https://github.com/garrettfoster13/pre2k &>/dev/null \
+	&& echo -e "$INSTALL_SIGN Installed \033[96mpre2k\033[0m via pipx."
+
 	# Nmap
 	apt install nmap -y &>/dev/null \
 	&& echo -e "$INSTALL_SIGN Installed \033[96mNmap\033[0m via APT."
