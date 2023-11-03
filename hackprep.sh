@@ -482,8 +482,10 @@ update_tools() {
 	else
 		echo -e "$NEGATIVE_SIGN Couldn't perform update operations within \033[93m$TOOLS_DIRECTORY\033[0m. Continuing..."
 	fi
-	if git clone https://github.com/udhos/update-golang /tmp/ug &>/dev/null && /tmp/ug/update-golang.sh &>/dev/null && rm -rf /tmp/ug && ln -s /usr/local/go/bin/go /usr/bin/go
+	if git clone https://github.com/udhos/update-golang /tmp/ug &>/dev/null && /tmp/ug/update-golang.sh &>/dev/null && rm -rf /tmp/ug
 	then
+ 		rm /usr/bin/go &>/dev/null
+   		ln -s /usr/local/go/bin/go /usr/bin/go &>/dev/null
 		echo -e "$PLUS_SIGN Updated or installed \033[93mGolang\033[0m via update-golang.sh."
 	else
 		clean_exit "Failed to update \033[93mGolang\033[0m via update-golang.sh."
